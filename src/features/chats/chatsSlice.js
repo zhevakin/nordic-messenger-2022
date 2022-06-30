@@ -13,6 +13,17 @@ export const getChats = createAsyncThunk('chats/getChats', async () => {
   return response.data
 })
 
+export const addChat = createAsyncThunk('chats/addChat', async (title) => {
+  const response = await axios.post(
+    'https://inordic-messenger-api.herokuapp.com/chats',
+    {
+      title,
+    }
+  )
+  // The value we return becomes the `fulfilled` action payload
+  return response.data
+})
+
 export const chatsSlice = createSlice({
   name: 'chats',
   initialState,
@@ -23,6 +34,10 @@ export const chatsSlice = createSlice({
     builder.addCase(getChats.fulfilled, (state, action) => {
       state.chats = action.payload
     })
+
+    builder.addCase(addChat.fulfilled, (state, action) => {
+      state.chats.push(action.payload)
+    })
   },
 })
 
@@ -31,6 +46,6 @@ export const chatsSlice = createSlice({
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
-export const selectChats = (state) => state.chats
+export const selectChats = (state) => state.chats.chats
 
 export default chatsSlice.reducer
