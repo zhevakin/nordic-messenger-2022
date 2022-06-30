@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import api from '../../helpers/api'
 
 const initialState = {
   messages: [],
@@ -8,9 +8,7 @@ const initialState = {
 export const getMessages = createAsyncThunk(
   'messages/getMessages',
   async (chatId) => {
-    const response = await axios.get(
-      `https://inordic-messenger-api.herokuapp.com/chats/${chatId}/messages`
-    )
+    const response = await api.get(`/chats/${chatId}/messages`)
     return response.data
   }
 )
