@@ -1,8 +1,14 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getMessages, selectMessages } from '../features/chats/messagesSlice'
+import {
+  getMessages,
+  selectMessages,
+  connect,
+  submitMessage,
+} from '../features/chats/messagesSlice'
 import Message from '../features/chats/Message'
+import MessageForm from '../features/chats/MessageForm'
 
 function Chat() {
   const { chatId } = useParams()
@@ -11,7 +17,17 @@ function Chat() {
 
   useEffect(() => {
     dispatch(getMessages(chatId))
+    dispatch(connect())
   }, [chatId])
+
+  const handleSubmit = ({ name, text }) => {
+    const message = {
+      chatId,
+      name,
+      text,
+    }
+    dispatch(submitMessage(message))
+  }
 
   return (
     <div>
@@ -21,6 +37,7 @@ function Chat() {
           <Message message={message} />
         </div>
       ))}
+      <MessageForm onSubmit={handleSubmit} />
     </div>
   )
 }
