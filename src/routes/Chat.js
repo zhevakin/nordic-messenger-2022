@@ -26,11 +26,12 @@ function Chat() {
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight
   }, [messages])
 
-  const handleSubmit = ({ name, text }) => {
+  const handleSubmit = ({ name, text, imageURL }) => {
     const message = {
       chatId,
       name,
       text,
+      imageURL,
     }
     dispatch(submitMessage(message))
   }

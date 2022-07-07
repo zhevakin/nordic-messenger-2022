@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { FormControl, Button } from 'react-bootstrap'
+import FileUpload from '../../components/FileUpload'
 
 function MessageForm({ onSubmit }) {
   const { register, handleSubmit, setValue } = useForm()
@@ -15,6 +16,10 @@ function MessageForm({ onSubmit }) {
     }
   }
 
+  const handleImageSubmit = (imageURL) => {
+    setValue('imageURL', imageURL)
+  }
+
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
       <div className="mb-2">
@@ -27,6 +32,9 @@ function MessageForm({ onSubmit }) {
           onKeyDown={handleKeyDown}
           {...register('text')}
         />
+      </div>
+      <div className="mb-2">
+        <FileUpload onUpload={handleImageSubmit} {...register('imageURL')} />
       </div>
       <Button type="submit">Отправить</Button>
     </form>
