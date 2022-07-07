@@ -13,7 +13,6 @@ function Message({ message }) {
         {message.imageURL && <Image src={message.imageURL} alt="" />}
         {message.location && (
           <div>
-            map
             <Map
               center={{
                 lat: message.location.latitude,
