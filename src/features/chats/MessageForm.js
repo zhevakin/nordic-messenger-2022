@@ -1,21 +1,51 @@
 import { useForm } from 'react-hook-form'
+import { FormControl, Button } from 'react-bootstrap'
+import FileUpload from '../../components/FileUpload'
+import Location from '../../components/Location'
 
 function MessageForm({ onSubmit }) {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, setValue } = useForm()
 
   const onFormSubmit = (data) => {
     onSubmit(data)
+    setValue('text', '')
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.code === 'Enter') {
+      handleSubmit(onFormSubmit)()
+    }
+  }
+
+  const handleImageSubmit = (imageURL) => {
+    setValue('imageURL', imageURL)
+  }
+
+  const handleLocation = (location) => {
+    console.log(location)
+    setValue('location', location)
   }
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
-      <div>
-        <input type="text" placeholder="Ваше имя" {...register('name')} />
+      <div className="mb-2">
+        <FormControl type="text" placeholder="Ваше имя" {...register('name')} />
       </div>
-      <div>
-        <textarea placeholder="Текст сообщения" {...register('text')} />
+      <div className="mb-2">
+        <FormControl
+          as="textarea"
+          placeholder="Текст сообщения"
+          onKeyDown={handleKeyDown}
+          {...register('text')}
+        />
       </div>
-      <button type="submit">Отправить</button>
+      <div className="mb-2">
+        <FileUpload onUpload={handleImageSubmit} {...register('imageURL')} />
+      </div>
+      <div className="mb-2">
+        <Location onLocation={handleLocation} {...register('location')} />
+      </div>
+      <Button type="submit">Отправить</Button>
     </form>
   )
 }
