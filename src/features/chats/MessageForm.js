@@ -6,11 +6,13 @@ import Location from '../../components/Location'
 function MessageForm({ onSubmit }) {
   const { register, handleSubmit, setValue, watch } = useForm()
   const location = watch('location')
+  const imageURL = watch('imageURL')
 
   const onFormSubmit = (data) => {
     onSubmit(data)
     setValue('text', '')
     setValue('location', null)
+    setValue('imageURL', null)
   }
 
   const handleKeyDown = (event) => {
@@ -41,7 +43,11 @@ function MessageForm({ onSubmit }) {
         />
       </div>
       <div className="mb-2">
-        <FileUpload onUpload={handleImageSubmit} {...register('imageURL')} />
+        <FileUpload
+          onUpload={handleImageSubmit}
+          {...register('imageURL')}
+          value={imageURL}
+        />
       </div>
       <div className="mb-2">
         <Location
