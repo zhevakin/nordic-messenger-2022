@@ -8,15 +8,13 @@ const options = {
   maximumAge: 0,
 }
 
-function Location({ onLocation }) {
+function Location({ onChange, value }) {
   const [loading, setLoading] = useState(false)
-  const [value, setValue] = useState()
   const [error, setError] = useState(false)
 
   const onSuccess = (pos) => {
     setLoading(false)
-    setValue(pos.coords)
-    onLocation(pos.coords)
+    onChange(pos.coords)
   }
 
   const onError = (err) => {
