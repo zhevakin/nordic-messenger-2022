@@ -32,9 +32,6 @@ function MessageForm({ onSubmit }) {
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
       <div className="mb-2">
-        <FormControl type="text" placeholder="Ваше имя" {...register('name')} />
-      </div>
-      <div className="mb-2">
         <FormControl
           as="textarea"
           placeholder="Текст сообщения"

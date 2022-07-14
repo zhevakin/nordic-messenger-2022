@@ -10,8 +10,10 @@ import {
 } from '../features/chats/messagesSlice'
 import Message from '../features/chats/Message'
 import MessageForm from '../features/chats/MessageForm'
+import { useAuth0 } from '@auth0/auth0-react'
 
 function Chat() {
+  const { user } = useAuth0()
   const { chatId } = useParams()
   const dispatch = useDispatch()
   const messages = useSelector(selectMessages)
@@ -26,10 +28,10 @@ function Chat() {
     messagesRef.current.scrollTop = messagesRef.current.scrollHeight
   }, [messages])
 
-  const handleSubmit = ({ name, text, imageURL, location }) => {
+  const handleSubmit = ({ text, imageURL, location }) => {
     const message = {
       chatId,
-      name,
+      name: user.name,
       text,
       imageURL,
       location,
